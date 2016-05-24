@@ -1,0 +1,5 @@
+ecr_repo_build_dir: "build"
+ecr_repo_template_dir: "{{ ecr_repo_build_dir }}"
+ecr_repo_template_name: "ecr_repo.json"
+ecr_repo_stack_name: "{{ ecr_repo_name }}-ecr-repo"
+ecr_repo_security_token: "{{ lookup('env','AWS_SESSION_TOKEN') }}"

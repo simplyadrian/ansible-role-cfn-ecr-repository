@@ -1,0 +1,9 @@
+- hosts: localhost
+  gather_facts: False
+  vars:
+    ecr_repo_name: test
+    ecr_repo_region: "us-west-2"    
+    ecr_repo_tags:
+      test: test
+  roles:
+    - ./

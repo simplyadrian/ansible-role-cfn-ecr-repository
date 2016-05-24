@@ -1,0 +1,17 @@
+{
+  "AWSTemplateFormatVersion" : "2010-09-09",
+  "Description" : "{{ lambda_stack_description | default('') }}",
+  "Parameters" : {
+    "RepositoryName" : {
+      "Type" : "String"
+    }
+  },
+  "Resources" : {
+    "ECRRepo" : {
+      "Type" : "AWS::ECR::Repository",
+      "Properties" : {
+        "RepositoryName" : { "Ref" : "RepositoryName"}
+      }
+    }
+  }
+}

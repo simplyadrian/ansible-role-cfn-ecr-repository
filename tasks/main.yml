@@ -1,0 +1,34 @@
+
+- name: Create necessary directories
+  file:
+    state: directory
+    path: "{{ item }}"
+  with_items:
+    - "{{ ecr_repo_build_dir }}"
+    - "{{ ecr_repo_template_dir }}"
+
+- name: Template ECR repo
+  template:
+    src: "ecr.json.j2"
+    dest: "{{ playbook_dir }}/{{ ecr_repo_template_dir }}/{{ ecr_repo_template_name }}"
+
+- name: Create ECR repo stack (security token)
+  cloudformation:
+    region: "{{ ecr_repo_region }}"
+    stack_name: "{{ ecr_repo_stack_name }}"
+    template: "{{ playbook_dir }}/{{ ecr_repo_template_dir }}/{{ ecr_repo_template_name }}"
+    template_parameters:
+      RepositoryName: "{{ ecr_repo_name }}"
+    tags: "{{ ecr_repo_tags }}"
+    security_token: "{{ ecr_repo_security_token }}"
+  when: ecr_repo_security_token is defined
+
+- name: Create ECR repo stack (no security token)
+  cloudformation:
+    region: "{{ ecr_repo_region }}"
+    stack_name: "{{ ecr_repo_stack_name }}"
+    template: "{{ playbook_dir }}/{{ ecr_repo_template_dir }}/{{ ecr_repo_template_name }}"
+    template_parameters:
+      RepositoryName: "{{ ecr_repo_name }}"
+    tags: "{{ ecr_repo_tags }}"
+  when: ecr_repo_security_token is not defined
