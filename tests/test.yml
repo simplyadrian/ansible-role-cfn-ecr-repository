@@ -1,0 +1,29 @@
+---
+- name: test build
+  hosts: test
+  vars:
+    ecr_repo_name: test
+    ecr_repo_region: "us-west-2"    
+    ecr_policy: "{{ lookup('file', 'policy.json') }}"
+    ecr_repo_tags:
+      test: test
+  roles:
+    - ansible-role-cfn-ecr-repository
+    - ansible-role-module-cfn-lookup
+  post_tasks:
+    - cfn_lookup:
+        stack_name: "{{ecr_repo_stack_name}}"
+        fact: "cf_output"
+        region: "{{ecr_repo_region}}"
+    - debug: msg="{{ cf_output }}"
+
+- name: test cleanup
+  hosts: test
+  vars:
+    ecr_repo_name: "test"
+    ecr_repo_region: "us-west-2"
+    ecr_repo_tags:
+      test: test
+    ecr_stack_state: absent
+  roles:
+    - ansible-role-cfn-ecr-repository
