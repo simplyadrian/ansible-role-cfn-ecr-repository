@@ -16,6 +16,7 @@
   cloudformation:
     region: "{{ ecr_repo_region }}"
     stack_name: "{{ ecr_repo_stack_name }}"
+    state: "{{ ecr_stack_state|default('present') }}"
     template: "{{ playbook_dir }}/{{ ecr_repo_template_dir }}/{{ ecr_repo_template_name }}"
     template_parameters:
       RepositoryName: "{{ ecr_repo_name }}"
@@ -27,6 +28,7 @@
   cloudformation:
     region: "{{ ecr_repo_region }}"
     stack_name: "{{ ecr_repo_stack_name }}"
+    state: "{{ ecr_stack_state|default('present') }}"
     template: "{{ playbook_dir }}/{{ ecr_repo_template_dir }}/{{ ecr_repo_template_name }}"
     template_parameters:
       RepositoryName: "{{ ecr_repo_name }}"

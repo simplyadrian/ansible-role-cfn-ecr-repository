@@ -11,7 +11,16 @@
       "Type" : "AWS::ECR::Repository",
       "Properties" : {
         "RepositoryName" : { "Ref" : "RepositoryName"}
+        {% if ecr_policy is defined %}
+        ,
+        "RepositoryPolicyText" : {{ ecr_policy|to_json }}
+        {% endif %}
       }
+    }
+  },
+  "Outputs" : {
+    "RepositoryName" : {
+      "Value" : { "Fn::GetAtt" : [ "ECRRepo", "Arn"] }
     }
   }
 }
