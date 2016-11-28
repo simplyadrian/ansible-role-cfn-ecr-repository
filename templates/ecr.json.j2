@@ -20,6 +20,9 @@
   },
   "Outputs" : {
     "RepositoryName" : {
+      "Value" : { "Ref" : "RepositoryName" }
+    },
+    "RepositoryArn" : {
       "Value" : { "Fn::GetAtt" : [ "ECRRepo", "Arn"] }
     }
   }
